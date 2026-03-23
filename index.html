@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LycheeMem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-400: #60a5fa;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-900: #1e3a8a;
+      --slate-50:  #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --green-500: #22c55e;
+      --green-600: #16a34a;
+      --amber-500: #f59e0b;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #ffffff;
+      color: var(--slate-800);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ─────────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--slate-900);
+    }
+    .nav-logo img { height: 30px; object-fit: contain; }
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--slate-600);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: color .15s, background .15s;
+    }
+    .nav-links a:hover { color: var(--blue-600); background: var(--blue-50); }
+    .nav-cta {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue-600) !important;
+      border: 1.5px solid var(--blue-200) !important;
+      background: var(--blue-50) !important;
+    }
+    .nav-cta:hover { background: var(--blue-100) !important; border-color: var(--blue-400) !important; }
+
+    /* ── Hero ────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(160deg, var(--blue-50) 0%, #ffffff 55%, var(--slate-50) 100%);
+      padding: 96px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-content { position: relative; max-width: 780px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--blue-50);
+      border: 1px solid var(--blue-200);
+      color: var(--blue-700);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+      letter-spacing: 0.01em;
+    }
+    .hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-500); }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 800;
+      color: var(--slate-900);
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      margin-bottom: 22px;
+    }
+    .hero h1 span { color: var(--blue-600); }
+    .hero-sub {
+      font-size: clamp(16px, 2.2vw, 19px);
+      color: var(--slate-500);
+      max-width: 600px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 24px;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .18s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--blue-600);
+      color: #fff;
+      box-shadow: 0 2px 8px rgb(37 99 235 / 0.3);
+    }
+    .btn-primary:hover { background: var(--blue-700); box-shadow: 0 4px 12px rgb(37 99 235 / 0.4); transform: translateY(-1px); }
+    .btn-secondary {
+      background: #fff;
+      color: var(--slate-700);
+      border: 1.5px solid var(--slate-200);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover { border-color: var(--slate-300); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--slate-600);
+      border: 1.5px solid var(--slate-200);
+    }
+    .btn-ghost:hover { background: var(--slate-50); }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 22px 16px;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--blue-600);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--slate-500);
+      line-height: 1.4;
+    }
+
+    /* ── Section helpers ─────────────────────────────────────────── */
+    section { padding: 88px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue-600);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 800;
+      color: var(--slate-900);
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .section-sub {
+      font-size: 17px;
+      color: var(--slate-500);
+      max-width: 560px;
+      line-height: 1.65;
+      margin-bottom: 52px;
+    }
+    .section-header-center { text-align: center; }
+    .section-header-center .section-sub { margin: 0 auto 52px; }
+
+    /* ── Memory Architecture ─────────────────────────────────────── */
+    .arch-section { background: var(--slate-50); }
+    .mem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .mem-card {
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .mem-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .mem-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+    .mem-icon-blue { background: var(--blue-50); }
+    .mem-icon-indigo { background: #eef2ff; }
+    .mem-icon-violet { background: #f5f3ff; }
+    .mem-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 6px;
+    }
+    .mem-card .meta {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--blue-500);
+      margin-bottom: 14px;
+      letter-spacing: 0.02em;
+    }
+    .mem-card p {
+      font-size: 14px;
+      color: var(--slate-600);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--blue-50);
+      color: var(--blue-700);
+      border: 1px solid var(--blue-100);
+    }
+    .tag-green { background: #f0fdf4; color: var(--green-600); border-color: #bbf7d0; }
+    .tag-violet { background: #f5f3ff; color: #7c3aed; border-color: #ddd6fe; }
+
+    /* ── Bi-temporal highlight ───────────────────────────────────── */
+    .bitemporal-box {
+      margin-top: 48px;
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      box-shadow: var(--shadow-sm);
+    }
+    .bitemporal-box h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+    .bitemporal-box p {
+      font-size: 15px;
+      color: var(--slate-600);
+      margin-bottom: 24px;
+    }
+    .temporal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .temporal-item {
+      background: var(--slate-50);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      border-left: 3px solid var(--blue-400);
+    }
+    .temporal-item .tt { font-size: 12px; font-weight: 600; color: var(--blue-600); margin-bottom: 4px; }
+    .temporal-item .td { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--slate-700); }
+
+    /* ── Pipeline ────────────────────────────────────────────────── */
+    .pipeline-section { background: #fff; }
+    .pipeline-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .pipeline-flow::before {
+      content: '';
+      position: absolute;
+      top: 38px;
+      left: calc(12.5% + 24px);
+      right: calc(12.5% + 24px);
+      height: 2px;
+      background: linear-gradient(to right, var(--blue-200), var(--blue-400), var(--blue-200));
+    }
+    .pipeline-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 12px;
+      position: relative;
+    }
+    .step-num {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--blue-600);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      box-shadow: 0 0 0 5px var(--blue-50);
+      position: relative;
+      z-index: 1;
+    }
+    .step-num-green {
+      background: var(--green-600);
+      box-shadow: 0 0 0 5px #f0fdf4;
+    }
+    .step-card {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 18px 16px;
+      width: 100%;
+    }
+    .step-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+    .step-card p {
+      font-size: 13px;
+      color: var(--slate-500);
+      line-height: 1.55;
+    }
+    .pipeline-bg-task {
+      margin-top: 32px;
+      background: var(--blue-50);
+      border: 1.5px dashed var(--blue-300);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .bg-badge {
+      flex-shrink: 0;
+      background: var(--blue-600);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.04em;
+    }
+    .pipeline-bg-task h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 3px;
+    }
+    .pipeline-bg-task p {
+      font-size: 13px;
+      color: var(--slate-600);
+    }
+
+    /* ── Retrieval signals ───────────────────────────────────────── */
+    .signals-section { background: var(--slate-50); }
+    .signals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .signal-card {
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 24px 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .signal-card .num {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue-500);
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+    .signal-card h4 { font-size: 16px; font-weight: 700; color: var(--slate-900); margin-bottom: 8px; }
+    .signal-card p { font-size: 14px; color: var(--slate-600); line-height: 1.6; }
+
+    .rerank-row {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .rerank-item {
+      flex: 1;
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    .rerank-item h5 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 4px;
+    }
+    .rerank-item p { font-size: 13px; color: var(--slate-500); line-height: 1.5; }
+
+    /* ── API Reference ───────────────────────────────────────────── */
+    .api-section { background: #fff; }
+    .api-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .api-card {
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: box-shadow .2s;
+    }
+    .api-card:hover { box-shadow: var(--shadow-md); }
+    .api-card-header {
+      background: var(--slate-50);
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .method-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: var(--radius-sm);
+      background: var(--blue-600);
+      color: #fff;
+    }
+    .endpoint {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--slate-700);
+    }
+    .api-card-body { padding: 20px; }
+    .api-card-body h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+    .api-card-body p {
+      font-size: 14px;
+      color: var(--slate-600);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .api-features { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .api-features li {
+      font-size: 13px;
+      color: var(--slate-600);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .api-features li::before {
+      content: '→';
+      color: var(--blue-400);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── Quick Start ─────────────────────────────────────────────── */
+    .qs-section { background: var(--slate-50); }
+    .qs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+    .qs-steps { display: flex; flex-direction: column; gap: 18px; }
+    .qs-step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .qs-step-num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--blue-600);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qs-step h4 { font-size: 15px; font-weight: 700; color: var(--slate-900); margin-bottom: 4px; }
+    .qs-step p { font-size: 14px; color: var(--slate-600); line-height: 1.55; }
+    .code-block {
+      background: var(--slate-900);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      overflow-x: auto;
+    }
+    .code-block .cb-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--slate-400);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .code-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+    .code-block .c-comment { color: #64748b; }
+    .code-block .c-cmd { color: #7dd3fc; }
+    .code-block .c-str { color: #86efac; }
+    .code-block .c-env { color: #fbbf24; }
+
+    /* ── Web Demo ────────────────────────────────────────────────── */
+    .demo-section { background: #fff; }
+    .demo-panels {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .demo-panel {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 22px 18px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .demo-panel:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .demo-panel .icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .demo-panel h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+    .demo-panel p { font-size: 13px; color: var(--slate-600); line-height: 1.6; }
+
+    /* ── CTA ─────────────────────────────────────────────────────── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-700) 100%);
+      padding: 88px 24px;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.025em;
+      margin-bottom: 14px;
+    }
+    .cta-section p {
+      font-size: 17px;
+      color: var(--blue-200);
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+    .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-white {
+      background: #fff;
+      color: var(--blue-700);
+      border: none;
+    }
+    .btn-white:hover { background: var(--blue-50); transform: translateY(-1px); }
+    .btn-outline-white {
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.5);
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+
+    /* ── Footer ──────────────────────────────────────────────────── */
+    footer {
+      background: var(--slate-900);
+      color: var(--slate-400);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--slate-400);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .footer-links a:hover { color: var(--slate-200); }
+    footer p { font-size: 13px; color: var(--slate-500); }
+
+    /* ── Divider ─────────────────────────────────────────────────── */
+    .divider {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 1px;
+      background: var(--slate-200);
+    }
+
+    /* ── Video Demo ─────────────────────────────────────────────── */
+    .video-section { background: #fff; }
+    .video-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+    }
+    .video-side {
+      position: relative;
+      background: var(--slate-900);
+      aspect-ratio: 16 / 9;
+    }
+    .video-side video,
+    .video-side iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .video-label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 2;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .video-label-challenger {
+      background: rgba(15, 23, 42, 0.75);
+      color: #94a3b8;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(6px);
+    }
+    .video-label-ours {
+      background: var(--blue-600);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.5);
+    }
+    .video-divider {
+      position: relative;
+    }
+    .video-divider::after {
+      content: 'VS';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--slate-700);
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--slate-200);
+      box-shadow: var(--shadow-md);
+      z-index: 10;
+      line-height: 1;
+      text-align: center;
+      padding-top: 1px;
+    }
+    .video-full {
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      background: var(--slate-900);
+      aspect-ratio: 16 / 9;
+      position: relative;
+    }
+    .video-full video,
+    .video-full iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .video-caption {
+      margin-top: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .vcap-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--slate-600);
+    }
+    .vcap-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .vcap-dot-blue { background: var(--blue-500); }
+    .vcap-dot-gray { background: var(--slate-400); }
+
+    /* ── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .mem-grid, .signals-grid { grid-template-columns: 1fr 1fr; }
+      .pipeline-flow { grid-template-columns: 1fr 1fr; }
+      .pipeline-flow::before { display: none; }
+      .api-grid { grid-template-columns: 1fr; }
+      .demo-panels { grid-template-columns: 1fr 1fr; }
+      .qs-grid { grid-template-columns: 1fr; }
+      .temporal-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .mem-grid, .signals-grid, .pipeline-flow, .demo-panels { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: 1fr; max-width: 280px; }
+      .rerank-row { flex-direction: column; }
+      section { padding: 60px 20px; }
+      .nav-links a.hide-mobile { display: none; }
+      .video-comparison { grid-template-columns: 1fr; }
+      .video-comparison .video-side:first-child { border-bottom: 1px solid var(--slate-700); }
+      .video-divider::after { top: auto; bottom: -18px; left: 50%; transform: translateX(-50%); }
+      .video-caption { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <img src="./assert/logo.png" alt="LycheeMem" onerror="this.style.display='none'" />
+      LycheeMem
+    </a>
+    <div class="nav-links">
+      <a href="#demo-video" class="hide-mobile">Demo</a>
+      <a href="#architecture" class="hide-mobile">Architecture</a>
+      <a href="#pipeline" class="hide-mobile">Pipeline</a>
+      <a href="#api" class="hide-mobile">API</a>
+      <a href="#quickstart" class="hide-mobile">Quick Start</a>
+      <a href="https://github.com/LycheeMem/LycheeMem" class="nav-cta">GitHub →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>LYCHEE<span>MEM</span></h1>
+    <p class="hero-sub">
+      LycheeMem gives AI agents the memory they need — persistent, structured, and time-aware.
+      Distinguishing <em>episodic experience</em> from <em>semantic knowledge</em>, activated at inference time through a multi-stage reasoning pipeline.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/LycheeMem/LycheeMem" class="btn btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        View on GitHub
+      </a>
+      <a href="#architecture" class="btn btn-secondary">Explore the Architecture ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-value">3-Tier</div>
+        <div class="stat-label">Cognitive Memory Architecture</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">5-Stage</div>
+        <div class="stat-label">Reasoning Pipeline</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">4×</div>
+        <div class="stat-label">Retrieval Signal Fusion</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Video Demo ──────────────────────────────────────────────── -->
+<section class="video-section" id="demo-video">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-tag">Live Demo</span>
+      <h2 class="section-title">LycheeMem vs ChatGPT</h2>
+
+    </div>
+    <div class="video-full">
+      <video src="./assert/demo.mp4" controls preload="metadata" style="background:#0f172a">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- ── Memory Architecture ──────────────────────────────────────── -->
+<section class="arch-section" id="architecture">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-tag">Memory Architecture</span>
+      <h2 class="section-title">Three Complementary Memory Stores</h2>
+      <p class="section-sub">
+        Inspired by the human memory system — distinguishing <em>what happened</em>
+        from <em>what is known</em> and <em>how to do things</em>.
+      </p>
+    </div>
+
+    <div class="mem-grid">
+      <div class="mem-card">
+        <div class="mem-icon mem-icon-blue">🧠</div>
+        <div class="meta">Working Memory · Episodic</div>
+        <h3>Session Context</h3>
+        <p>
+          Holds the active conversation window under a <strong>dual-threshold token budget</strong>.
+          Warn at 70% triggers background pre-compression; block at 90% pauses and flushes
+          older turns to summary anchors.
+        </p>
+        <div class="tag-list">
+          <span class="tag">Dual-threshold budget</span>
+          <span class="tag">Summary anchors</span>
+          <span class="tag">Verbatim recent turns</span>
+        </div>
+      </div>
+
+      <div class="mem-card">
+        <div class="mem-icon mem-icon-indigo">🕸️</div>
+        <div class="meta">Semantic Memory · Knowledge Graph</div>
+        <h3>Bi-temporal Graph</h3>
+        <p>
+          A <strong>Graphiti-style bi-temporal graph</strong> stored in Neo4j, modeling the world
+          as Episodes, Entities, Facts, and Communities — each Fact carrying four timestamps
+          to separate real-world validity from system transaction time.
+        </p>
+        <div class="tag-list">
+          <span class="tag">Neo4j backend</span>
+          <span class="tag">Bi-temporal facts</span>
+          <span class="tag">Community detection</span>
+          <span class="tag">Episode anchors</span>
+        </div>
+      </div>
+
+      <div class="mem-card">
+        <div class="mem-icon mem-icon-violet">⚙️</div>
+        <div class="meta">Procedural Memory · Skills</div>
+        <h3>How-to Knowledge</h3>
+        <p>
+          Stores reusable skill entries with intent, full Markdown docs, and dense embeddings.
+          Retrieval uses <strong>HyDE</strong> — the query is first expanded into a hypothetical
+          ideal answer before embedding, producing high-quality matches against stored procedures.
+        </p>
+        <div class="tag-list">
+          <span class="tag tag-violet">HyDE retrieval</span>
+          <span class="tag tag-violet">File-based store</span>
+          <span class="tag tag-violet">Intent embeddings</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bi-temporal callout -->
+    <div class="bitemporal-box">
+      <h3>🕐 Bi-temporal Model — Time-Aware Fact Tracking</h3>
+      <p>
+        Every <code>Fact</code> node in the knowledge graph carries four timestamps,
+        enabling the system to correctly answer "what did the user believe last month?"
+        even after facts have changed.
+      </p>
+      <div class="temporal-grid">
+        <div class="temporal-item">
+          <div class="tt">Valid Time (real world)</div>
+          <div class="td">t_valid_from / t_valid_to</div>
+        </div>
+        <div class="temporal-item">
+          <div class="tt">Transaction Time (system)</div>
+          <div class="td">t_tx_created / t_tx_expired</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pipeline ─────────────────────────────────────────────────── -->
+<section class="pipeline-section" id="pipeline">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-tag">Reasoning Pipeline</span>
+      <h2 class="section-title">Four Synchronous Stages + One Background Task</h2>
+      <p class="section-sub">
+        Every request flows through a fixed LangGraph pipeline. The consolidation
+        task runs asynchronously after the response is returned.
+      </p>
+    </div>
+
+    <div class="pipeline-flow">
+      <div class="pipeline-step">
+        <div class="step-num">1</div>
+        <div class="step-card">
+          <h4>WMManager</h4>
+          <p>Token budget check. Appends the user turn, triggers compression if either threshold is crossed. Produces compressed history for downstream.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">2</div>
+        <div class="step-card">
+          <h4>SearchCoordinator</h4>
+          <p>Decomposes the query into multi-source sub-queries. Dispatches parallel searches to the knowledge graph (BM25 + BFS + ANN) and the skill store (HyDE).</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">3</div>
+        <div class="step-card">
+          <h4>SynthesizerAgent</h4>
+          <p>LLM-as-Judge: scores each retrieved fragment 0–1, discards below threshold (default 0.6), fuses survivors into a single dense background context.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num step-num-green">4</div>
+        <div class="step-card">
+          <h4>ReasoningAgent</h4>
+          <p>Receives compressed history, background context, and skill reuse plan. Generates the final streaming response and appends it to session storage.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-bg-task">
+      <span class="bg-badge">BACKGROUND</span>
+      <div>
+        <h4>ConsolidatorAgent — asyncio.create_task</h4>
+        <p>Runs in a thread pool after the response is returned. Performs novelty check, ingests entities &amp; facts into Neo4j with bi-temporal timestamps, and extracts new skill entries from the conversation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Retrieval Signals ─────────────────────────────────────────── -->
+<section class="signals-section" id="retrieval">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-tag">Semantic Memory Retrieval</span>
+      <h2 class="section-title">Four-Signal Fusion with RRF Re-ranking</h2>
+      <p class="section-sub">
+        Graph search combines three complementary signals, then fuses them via
+        Reciprocal Rank Fusion for robust, diverse recall.
+      </p>
+    </div>
+
+    <div class="signals-grid">
+      <div class="signal-card">
+        <div class="num">SIGNAL 01</div>
+        <h4>BM25 Full-text Search</h4>
+        <p>Keyword-level recall against <code>Entity.name</code> and <code>Fact.fact_text</code> via Neo4j full-text index. Fast, precise on exact terms.</p>
+      </div>
+      <div class="signal-card">
+        <div class="num">SIGNAL 02</div>
+        <h4>BFS Graph Traversal</h4>
+        <p>Expands outward from the session's most recent episode nodes up to a configurable depth. Surfaces semantically linked facts even with no keyword match.</p>
+      </div>
+      <div class="signal-card">
+        <div class="num">SIGNAL 03</div>
+        <h4>Vector ANN Search</h4>
+        <p>Approximate nearest-neighbour over <code>Entity.embedding</code> — configurable dimensionality and similarity function (cosine / dot product).</p>
+      </div>
+    </div>
+
+    <div class="rerank-row">
+      <div class="rerank-item">
+        <h5>⚡ Reciprocal Rank Fusion (RRF)</h5>
+        <p>Merges rankings from all three signal lists into a single ordered candidate set without requiring score calibration.</p>
+      </div>
+      <div class="rerank-item">
+        <h5>🎯 Cross-encoder Reranker</h5>
+        <p>Optional LLM-driven reranker refines the top-N candidates. Driven by the same LiteLLM adapter — no extra SDK.</p>
+      </div>
+      <div class="rerank-item">
+        <h5>🔀 MMR Diversification</h5>
+        <p>Maximal Marginal Relevance filters near-duplicate context fragments to ensure variety in the final prompt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── API Reference ─────────────────────────────────────────────── -->
+<section class="api-section" id="api">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-tag">API Reference</span>
+      <h2 class="section-title">Five Core Endpoints</h2>
+      <p class="section-sub">
+        A clean FastAPI server with interactive docs at <code>/docs</code>.
+        Supports both streaming (SSE) and non-streaming responses.
+      </p>
+    </div>
+
+    <div class="api-grid">
+      <div class="api-card">
+        <div class="api-card-header">
+          <span class="method-badge">POST</span>
+          <span class="endpoint">/memory/search</span>
+        </div>
+        <div class="api-card-body">
+          <h4>Unified Memory Retrieval</h4>
+          <p>Query both the knowledge graph and the skill store in a single call. Returns ranked fact results with relevance scores.</p>
+          <ul class="api-features">
+            <li>BM25 + BFS + ANN fusion via RRF</li>
+            <li>Configurable <code>top_k</code>, graph &amp; skill toggles</li>
+            <li>Returns <code>fact_id</code>, <code>summary</code>, <code>relevance</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="api-card">
+        <div class="api-card-header">
+          <span class="method-badge">POST</span>
+          <span class="endpoint">/memory/synthesize</span>
+        </div>
+        <div class="api-card-body">
+          <h4>Memory Fusion</h4>
+          <p>Takes raw retrieval results and fuses them into a single dense context using LLM-as-Judge scoring.</p>
+          <ul class="api-features">
+            <li>0–1 relevance scoring per fragment</li>
+            <li>Returns <code>background_context</code>, <code>skill_reuse_plan</code></li>
+            <li>Full <code>provenance</code> with RRF + BFS/BM25 ranks</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="api-card">
+        <div class="api-card-header">
+          <span class="method-badge">POST</span>
+          <span class="endpoint">/memory/reason</span>
+        </div>
+        <div class="api-card-body">
+          <h4>Grounded Reasoning</h4>
+          <p>Runs the ReasoningAgent with a pre-synthesized context. Chain after <code>/synthesize</code> for full pipeline control.</p>
+          <ul class="api-features">
+            <li>Accepts <code>background_context</code> &amp; <code>skill_reuse_plan</code></li>
+            <li>Optional session write-back</li>
+            <li>Returns token usage stats</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="api-card">
+        <div class="api-card-header">
+          <span class="method-badge">POST</span>
+          <span class="endpoint">/memory/consolidate/{session_id}</span>
+        </div>
+        <div class="api-card-body">
+          <h4>Trigger Consolidation</h4>
+          <p>Manually trigger memory consolidation for any session. Normally runs automatically in the background after each chat turn.</p>
+          <ul class="api-features">
+            <li>Novelty check before writing</li>
+            <li>Ingest entities &amp; facts to Neo4j</li>
+            <li>Extract &amp; store new skill entries</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat endpoint highlight -->
+    <div style="margin-top: 20px; border: 1px solid var(--blue-200); border-radius: var(--radius-lg); overflow: hidden;">
+      <div class="api-card-header">
+        <span class="method-badge">POST</span>
+        <span class="endpoint">/chat/complete</span>
+        <span style="margin-left: auto; font-size: 13px; color: var(--blue-600); font-weight: 600;">Full Pipeline · Streaming SSE</span>
+      </div>
+      <div class="api-card-body">
+        <h4>End-to-End Chat</h4>
+        <p>Runs the full 4-stage pipeline (WMManager → SearchCoordinator → SynthesizerAgent → ReasoningAgent) with a single API call. Supports streaming via Server-Sent Events for real-time token output. ConsolidatorAgent fires automatically in the background after each response.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Quick Start ───────────────────────────────────────────────── -->
+<section class="qs-section" id="quickstart">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-tag">Quick Start</span>
+      <h2 class="section-title">Up and Running in Minutes</h2>
+      <p class="section-sub">Three steps to your first memory-augmented agent.</p>
+    </div>
+
+    <div class="qs-grid">
+      <div class="qs-steps">
+        <div class="qs-step">
+          <div class="qs-step-num">1</div>
+          <div>
+            <h4>Prerequisites</h4>
+            <p>Python 3.11+, Neo4j 5.x with GDS plugin &amp; vector index, and an LLM API key (OpenAI, Gemini, or any <a href="https://github.com/BerriAI/litellm" style="color:var(--blue-600)">litellm</a>-compatible provider).</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-num">2</div>
+          <div>
+            <h4>Install &amp; Configure</h4>
+            <p>Clone the repo, install dependencies, then copy <code>.env.example</code> to <code>.env</code> and fill in your LLM model, API key, and Neo4j connection details.</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-num">3</div>
+          <div>
+            <h4>Start the Server</h4>
+            <p>Run <code>python main.py</code>. The FastAPI server starts at <code>http://localhost:8000</code>. Interactive docs at <code>/docs</code>. The React web demo is available under <code>web-demo/</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="cb-title">Setup</div>
+        <pre><span class="c-comment"># Clone &amp; install</span>
+<span class="c-cmd">git clone</span> <span class="c-str">https://github.com/LycheeMem/LycheeMem</span>
+<span class="c-cmd">cd</span> LycheeMem
+<span class="c-cmd">pip install -e</span> <span class="c-str">".[dev]"</span>
+
+<span class="c-comment"># Configure .env</span>
+<span class="c-env">LLM_MODEL</span>=openai/gpt-4o-mini
+<span class="c-env">LLM_API_KEY</span>=sk-...
+<span class="c-env">EMBEDDING_MODEL</span>=openai/text-embedding-3-small
+<span class="c-env">EMBEDDING_DIM</span>=1536
+<span class="c-env">NEO4J_URI</span>=neo4j://127.0.0.1:7687
+<span class="c-env">NEO4J_USER</span>=neo4j
+<span class="c-env">NEO4J_PASSWORD</span>=your_password
+
+<span class="c-comment"># Start server</span>
+<span class="c-cmd">python</span> main.py
+
+<span class="c-comment"># Run the demo script</span>
+<span class="c-cmd">python</span> examples/api_pipeline_demo.py</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Web Demo ──────────────────────────────────────────────────── -->
+<section class="demo-section" id="demo">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-tag">Web Demo</span>
+      <h2 class="section-title">Built-in React Dashboard</h2>
+      <p class="section-sub">
+        A full-featured React + Vite frontend with live inspection of every memory store and pipeline stage.
+      </p>
+    </div>
+
+    <div class="demo-panels">
+      <div class="demo-panel">
+        <div class="icon">💬</div>
+        <h4>Chat</h4>
+        <p>Full conversation view with per-step trace expansion. Click any pipeline stage to inspect retrieved &amp; scored fragments.</p>
+      </div>
+      <div class="demo-panel">
+        <div class="icon">🕸️</div>
+        <h4>Graph Memory</h4>
+        <p>Interactive Neo4j knowledge graph visualization. Search by entity name or relation type, and filter by valid-time range.</p>
+      </div>
+      <div class="demo-panel">
+        <div class="icon">⚙️</div>
+        <h4>Skills</h4>
+        <p>Browse and search the procedural skill library. See intent, Markdown docs, usage counts, and last-used timestamps.</p>
+      </div>
+      <div class="demo-panel">
+        <div class="icon">📊</div>
+        <h4>Working Memory</h4>
+        <p>Live token usage gauge, compressed summary anchors, and verbatim recent turns for the active session.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:28px; text-align:center;">
+      <div class="code-block" style="display:inline-block; text-align:left; min-width:400px;">
+        <div class="cb-title">Start the web demo</div>
+        <pre><span class="c-cmd">cd</span> web-demo
+<span class="c-cmd">npm install</span>
+<span class="c-cmd">npm run dev</span>   <span class="c-comment"># → http://localhost:5173</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div>
+    <h2>Give Your Agents Real Memory</h2>
+    <p>LycheeMem is open-source, training-free, and ready for production. Star the repo and start building.</p>
+    <div class="cta-actions">
+      <a href="https://github.com/LycheeMem/LycheeMem" class="btn btn-white">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        Star on GitHub
+      </a>
+      <a href="../README.md" class="btn btn-outline-white">Read the Docs</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="https://github.com/LycheeMem/LycheeMem">GitHub</a>
+      <a href="https://github.com/LycheeMem/LycheeMem/blob/main/README.md">Documentation</a>
+      <a href="https://github.com/LycheeMem/LycheeMem/blob/main/README_zh.md">中文文档</a>
+      <a href="https://github.com/LycheeMem/LycheeMem/blob/main/LICENSE">Apache 2.0 License</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
