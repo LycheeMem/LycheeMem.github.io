@@ -841,6 +841,9 @@
       <a href="#pipeline" class="hide-mobile">Pipeline</a>
       <a href="#api" class="hide-mobile">API</a>
       <a href="#quickstart" class="hide-mobile">Quick Start</a>
+      <a href="#demo" class="hide-mobile">Web Demo</a>
+      <a href="#openclaw" class="hide-mobile">OpenClaw</a>
+      <a href="#mcp" class="hide-mobile">MCP</a>
       <a href="https://github.com/LycheeMem/LycheeMem" class="nav-cta">GitHub →</a>
     </div>
   </div>
@@ -851,28 +854,29 @@
   <div class="hero-content">
     <h1>LYCHEE<span>MEM</span></h1>
     <p class="hero-sub">
-      LycheeMem gives AI agents the memory they need — persistent, structured, and time-aware.
-      Distinguishing <em>episodic experience</em> from <em>semantic knowledge</em>, activated at inference time through a multi-stage reasoning pipeline.
+      Compact, efficient, and extensible long-term memory for LLM agents.
+      LycheeMem starts from structured conversational memory, adds lightweight consolidation and adaptive retrieval,
+      and now ships with <em>Compact Semantic Memory</em>, <em>OpenClaw integration</em>, and an <em>HTTP MCP endpoint</em>.
     </p>
     <div class="hero-actions">
       <a href="https://github.com/LycheeMem/LycheeMem" class="btn btn-primary">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
         View on GitHub
       </a>
-      <a href="#architecture" class="btn btn-secondary">Explore the Architecture ↓</a>
+      <a href="#quickstart" class="btn btn-secondary">Quick Start ↓</a>
     </div>
     <div class="hero-stats">
       <div class="stat-card">
-        <div class="stat-value">3-Tier</div>
-        <div class="stat-label">Cognitive Memory Architecture</div>
+        <div class="stat-value">7 Types</div>
+        <div class="stat-label">Semantic memory categories</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">5-Stage</div>
-        <div class="stat-label">Reasoning Pipeline</div>
+        <div class="stat-value">5 Channels</div>
+        <div class="stat-label">Action-aware semantic retrieval</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">4×</div>
-        <div class="stat-label">Retrieval Signal Fusion</div>
+        <div class="stat-value">MCP + Plugin</div>
+        <div class="stat-label">OpenClaw and remote tool access</div>
       </div>
     </div>
   </div>
@@ -883,8 +887,11 @@
   <div class="section-inner">
     <div class="section-header-center">
       <span class="section-tag">Live Demo</span>
-      <h2 class="section-title">LycheeMem vs ChatGPT</h2>
-
+      <h2 class="section-title">See Long-Term Memory In Action</h2>
+      <p class="section-sub">
+        The project ships with a working demo experience and a React dashboard for inspecting memory,
+        retrieval, and session state in real time.
+      </p>
     </div>
     <div class="video-full">
       <video src="https://ik.imagekit.io/wvs0koh4k/99043dc9-b8dd-4e78-ac48-c38da4e7405c.mp4" controls preload="metadata" style="background:#0f172a">
@@ -901,8 +908,8 @@
       <span class="section-tag">Memory Architecture</span>
       <h2 class="section-title">Three Complementary Memory Stores</h2>
       <p class="section-sub">
-        Inspired by the human memory system — distinguishing <em>what happened</em>
-        from <em>what is known</em> and <em>how to do things</em>.
+        LycheeMem keeps the architecture simple: active session context, a compact semantic store for reusable long-term knowledge,
+        and a procedural skill layer for how-to reuse.
       </p>
     </div>
 
@@ -912,9 +919,9 @@
         <div class="meta">Working Memory · Episodic</div>
         <h3>Session Context</h3>
         <p>
-          Holds the active conversation window under a <strong>dual-threshold token budget</strong>.
-          Warn at 70% triggers background pre-compression; block at 90% pauses and flushes
-          older turns to summary anchors.
+          Holds the active conversation under a <strong>dual-threshold token budget</strong>.
+          At 70% it pre-compresses asynchronously; at 90% it blocks, summarizes older turns,
+          and preserves recent turns verbatim.
         </p>
         <div class="tag-list">
           <span class="tag">Dual-threshold budget</span>
@@ -925,18 +932,18 @@
 
       <div class="mem-card">
         <div class="mem-icon mem-icon-indigo">🕸️</div>
-        <div class="meta">Semantic Memory · Knowledge Graph</div>
-        <h3>Bi-temporal Graph</h3>
+        <div class="meta">Semantic Memory · Compact Store</div>
+        <h3>Compact Semantic Memory</h3>
         <p>
-          A <strong>Graphiti-style bi-temporal graph</strong> stored in Neo4j, modeling the world
-          as Episodes, Entities, Facts, and Communities — each Fact carrying four timestamps
-          to separate real-world validity from system transaction time.
+          Long-term knowledge is stored as typed, action-annotated <strong>MemoryRecords</strong>.
+          The latest design uses <strong>SQLite FTS5 + LanceDB</strong>, so no Neo4j is required,
+          while retrieval stays fast and deployment stays lightweight.
         </p>
         <div class="tag-list">
-          <span class="tag">Neo4j backend</span>
-          <span class="tag">Bi-temporal facts</span>
-          <span class="tag">Community detection</span>
-          <span class="tag">Episode anchors</span>
+          <span class="tag">SQLite FTS5</span>
+          <span class="tag">LanceDB vectors</span>
+          <span class="tag">Record Fusion</span>
+          <span class="tag">Usage statistics</span>
         </div>
       </div>
 
@@ -945,9 +952,9 @@
         <div class="meta">Procedural Memory · Skills</div>
         <h3>How-to Knowledge</h3>
         <p>
-          Stores reusable skill entries with intent, full Markdown docs, and dense embeddings.
-          Retrieval uses <strong>HyDE</strong> — the query is first expanded into a hypothetical
-          ideal answer before embedding, producing high-quality matches against stored procedures.
+          Skills are stored separately as reusable procedural entries with intent, Markdown docs,
+          and dense embeddings. Retrieval uses <strong>HyDE</strong> so the system can match a task
+          against an idealized answer before it searches the skill library.
         </p>
         <div class="tag-list">
           <span class="tag tag-violet">HyDE retrieval</span>
@@ -957,22 +964,21 @@
       </div>
     </div>
 
-    <!-- Bi-temporal callout -->
     <div class="bitemporal-box">
-      <h3>🕐 Bi-temporal Model — Time-Aware Fact Tracking</h3>
+      <h3>Compact Semantic Memory at a Glance</h3>
       <p>
-        Every <code>Fact</code> node in the knowledge graph carries four timestamps,
-        enabling the system to correctly answer "what did the user believe last month?"
-        even after facts have changed.
+        Semantic memory now revolves around <code>MemoryRecord</code> and <code>CompositeRecord</code>:
+        compact typed entries first, denser fused entries later. That keeps ingestion cheap while still
+        giving retrieval something more structured than raw conversation logs.
       </p>
       <div class="temporal-grid">
         <div class="temporal-item">
-          <div class="tt">Valid Time (real world)</div>
-          <div class="td">t_valid_from / t_valid_to</div>
+          <div class="tt">7 record types</div>
+          <div class="td">fact / preference / event / constraint / procedure / failure_pattern / tool_affordance</div>
         </div>
         <div class="temporal-item">
-          <div class="tt">Transaction Time (system)</div>
-          <div class="td">t_tx_created / t_tx_expired</div>
+          <div class="tt">Storage layer</div>
+          <div class="td">SQLite FTS5 + LanceDB with retrieval_count and action_success_count stats</div>
         </div>
       </div>
     </div>
@@ -986,8 +992,8 @@
       <span class="section-tag">Reasoning Pipeline</span>
       <h2 class="section-title">Four Synchronous Stages + One Background Task</h2>
       <p class="section-sub">
-        Every request flows through a fixed LangGraph pipeline. The consolidation
-        task runs asynchronously after the response is returned.
+        The request path is still explicit and inspectable: manage working memory, plan retrieval,
+        synthesize background context, answer, then consolidate in the background.
       </p>
     </div>
 
@@ -996,28 +1002,28 @@
         <div class="step-num">1</div>
         <div class="step-card">
           <h4>WMManager</h4>
-          <p>Token budget check. Appends the user turn, triggers compression if either threshold is crossed. Produces compressed history for downstream.</p>
+          <p>Appends the user turn, enforces the token budget, and produces compressed history made of summary anchors plus recent raw turns.</p>
         </div>
       </div>
       <div class="pipeline-step">
         <div class="step-num">2</div>
         <div class="step-card">
           <h4>SearchCoordinator</h4>
-          <p>Decomposes the query into multi-source sub-queries. Dispatches parallel searches to the knowledge graph (BM25 + BFS + ANN) and the skill store (HyDE).</p>
+          <p>Builds an action-aware search plan, then queries semantic memory through FTS, vectors, tags, and temporal filters while also searching skills with HyDE.</p>
         </div>
       </div>
       <div class="pipeline-step">
         <div class="step-num">3</div>
         <div class="step-card">
           <h4>SynthesizerAgent</h4>
-          <p>LLM-as-Judge: scores each retrieved fragment 0–1, discards below threshold (default 0.6), fuses survivors into a single dense background context.</p>
+          <p>Acts as LLM-as-Judge, scores every fragment on a 0-1 scale, drops low-signal results, and assembles a dense <code>background_context</code>.</p>
         </div>
       </div>
       <div class="pipeline-step">
         <div class="step-num step-num-green">4</div>
         <div class="step-card">
           <h4>ReasoningAgent</h4>
-          <p>Receives compressed history, background context, and skill reuse plan. Generates the final streaming response and appends it to session storage.</p>
+          <p>Uses compressed history, fused memory context, and the skill reuse plan to generate the final answer and write it back to the session.</p>
         </div>
       </div>
     </div>
@@ -1026,7 +1032,7 @@
       <span class="bg-badge">BACKGROUND</span>
       <div>
         <h4>ConsolidatorAgent — asyncio.create_task</h4>
-        <p>Runs in a thread pool after the response is returned. Performs novelty check, ingests entities &amp; facts into Neo4j with bi-temporal timestamps, and extracts new skill entries from the conversation.</p>
+        <p>Runs after the reply returns. It performs novelty checking, ingests typed semantic records into SQLite + LanceDB, triggers Record Fusion, and extracts new skill entries in parallel.</p>
       </div>
     </div>
   </div>
@@ -1037,43 +1043,43 @@
   <div class="section-inner">
     <div class="section-header-center">
       <span class="section-tag">Semantic Memory Retrieval</span>
-      <h2 class="section-title">Four-Signal Fusion with RRF Re-ranking</h2>
+      <h2 class="section-title">Action-Aware Planning with Five Parallel Recall Channels</h2>
       <p class="section-sub">
-        Graph search combines three complementary signals, then fuses them via
-        Reciprocal Rank Fusion for robust, diverse recall.
+        The latest semantic retrieval no longer depends on graph traversal. It starts from a <code>SearchPlan</code>
+        with semantic queries, pragmatic queries, tool hints, constraints, and time filters.
       </p>
     </div>
 
     <div class="signals-grid">
       <div class="signal-card">
         <div class="num">SIGNAL 01</div>
-        <h4>BM25 Full-text Search</h4>
-        <p>Keyword-level recall against <code>Entity.name</code> and <code>Fact.fact_text</code> via Neo4j full-text index. Fast, precise on exact terms.</p>
+        <h4>FTS + Vector Recall</h4>
+        <p>SQLite FTS5 handles exact lexical recall while LanceDB runs semantic and normalized ANN search over compact memory entries.</p>
       </div>
       <div class="signal-card">
         <div class="num">SIGNAL 02</div>
-        <h4>BFS Graph Traversal</h4>
-        <p>Expands outward from the session's most recent episode nodes up to a configurable depth. Surfaces semantically linked facts even with no keyword match.</p>
+        <h4>Tag and Constraint Filters</h4>
+        <p>Tool hints, constraint tags, failure tags, and affordance tags let the planner surface action-relevant memory instead of generic semantic similarity only.</p>
       </div>
       <div class="signal-card">
         <div class="num">SIGNAL 03</div>
-        <h4>Vector ANN Search</h4>
-        <p>Approximate nearest-neighbour over <code>Entity.embedding</code> — configurable dimensionality and similarity function (cosine / dot product).</p>
+        <h4>Temporal + Skill Recall</h4>
+        <p>Temporal filters narrow semantic memory by time window, while HyDE retrieves complementary skill documents for executable how-to context.</p>
       </div>
     </div>
 
     <div class="rerank-row">
       <div class="rerank-item">
-        <h5>⚡ Reciprocal Rank Fusion (RRF)</h5>
-        <p>Merges rankings from all three signal lists into a single ordered candidate set without requiring score calibration.</p>
+        <h5>SearchPlan</h5>
+        <p>Planner output includes <code>mode</code>, semantic and pragmatic queries, likely tools, required constraints, and missing slots.</p>
       </div>
       <div class="rerank-item">
-        <h5>🎯 Cross-encoder Reranker</h5>
-        <p>Optional LLM-driven reranker refines the top-N candidates. Driven by the same LiteLLM adapter — no extra SDK.</p>
+        <h5>Six-dimensional scoring</h5>
+        <p>Candidates are ranked with a richer scorer before synthesis, giving more weight to action fit and reusable composite records.</p>
       </div>
       <div class="rerank-item">
-        <h5>🔀 MMR Diversification</h5>
-        <p>Maximal Marginal Relevance filters near-duplicate context fragments to ensure variety in the final prompt.</p>
+        <h5>Composite records first</h5>
+        <p>Related fragments can be fused online into denser records, and those fused entries are ranked above their raw source fragments.</p>
       </div>
     </div>
   </div>
@@ -1084,10 +1090,10 @@
   <div class="section-inner">
     <div class="section-header-center">
       <span class="section-tag">API Reference</span>
-      <h2 class="section-title">Five Core Endpoints</h2>
+      <h2 class="section-title">Core Memory APIs</h2>
       <p class="section-sub">
-        A clean FastAPI server with interactive docs at <code>/docs</code>.
-        Supports both streaming (SSE) and non-streaming responses.
+        The FastAPI backend exposes a small set of composable endpoints. Use them directly,
+        or go through the MCP server and OpenClaw plugin layers.
       </p>
     </div>
 
@@ -1099,11 +1105,11 @@
         </div>
         <div class="api-card-body">
           <h4>Unified Memory Retrieval</h4>
-          <p>Query both the knowledge graph and the skill store in a single call. Returns ranked fact results with relevance scores.</p>
+          <p>Query semantic memory and the skill store together. Returns graph-style memory results, skill hits, and ranked provenance.</p>
           <ul class="api-features">
-            <li>BM25 + BFS + ANN fusion via RRF</li>
-            <li>Configurable <code>top_k</code>, graph &amp; skill toggles</li>
-            <li>Returns <code>fact_id</code>, <code>summary</code>, <code>relevance</code></li>
+            <li>Supports <code>top_k</code>, semantic memory, and skill toggles</li>
+            <li>Returns <code>graph_results</code> and <code>skill_results</code></li>
+            <li>Designed to feed directly into <code>/memory/synthesize</code></li>
           </ul>
         </div>
       </div>
@@ -1115,11 +1121,11 @@
         </div>
         <div class="api-card-body">
           <h4>Memory Fusion</h4>
-          <p>Takes raw retrieval results and fuses them into a single dense context using LLM-as-Judge scoring.</p>
+          <p>Takes raw retrieval output and produces fused memory context with provenance and an explicit skill reuse plan.</p>
           <ul class="api-features">
             <li>0–1 relevance scoring per fragment</li>
             <li>Returns <code>background_context</code>, <code>skill_reuse_plan</code></li>
-            <li>Full <code>provenance</code> with RRF + BFS/BM25 ranks</li>
+            <li>Includes kept vs dropped fragment counts</li>
           </ul>
         </div>
       </div>
@@ -1131,9 +1137,9 @@
         </div>
         <div class="api-card-body">
           <h4>Grounded Reasoning</h4>
-          <p>Runs the ReasoningAgent with a pre-synthesized context. Chain after <code>/synthesize</code> for full pipeline control.</p>
+          <p>Runs the final reasoning stage with pre-synthesized context and can optionally append the reply into session history.</p>
           <ul class="api-features">
-            <li>Accepts <code>background_context</code> &amp; <code>skill_reuse_plan</code></li>
+            <li>Accepts <code>background_context</code> and <code>skill_reuse_plan</code></li>
             <li>Optional session write-back</li>
             <li>Returns token usage stats</li>
           </ul>
@@ -1147,10 +1153,10 @@
         </div>
         <div class="api-card-body">
           <h4>Trigger Consolidation</h4>
-          <p>Manually trigger memory consolidation for any session. Normally runs automatically in the background after each chat turn.</p>
+          <p>Manually persist long-term memory for a session. Normally this happens automatically after each chat turn or at session boundaries.</p>
           <ul class="api-features">
             <li>Novelty check before writing</li>
-            <li>Ingest entities &amp; facts to Neo4j</li>
+            <li>Writes compact records to SQLite + LanceDB</li>
             <li>Extract &amp; store new skill entries</li>
           </ul>
         </div>
@@ -1161,12 +1167,12 @@
     <div style="margin-top: 20px; border: 1px solid var(--blue-200); border-radius: var(--radius-lg); overflow: hidden;">
       <div class="api-card-header">
         <span class="method-badge">POST</span>
-        <span class="endpoint">/chat/complete</span>
-        <span style="margin-left: auto; font-size: 13px; color: var(--blue-600); font-weight: 600;">Full Pipeline · Streaming SSE</span>
+        <span class="endpoint">/chat</span>
+        <span style="margin-left: auto; font-size: 13px; color: var(--blue-600); font-weight: 600;">Session write path</span>
       </div>
       <div class="api-card-body">
         <h4>End-to-End Chat</h4>
-        <p>Runs the full 4-stage pipeline (WMManager → SearchCoordinator → SynthesizerAgent → ReasoningAgent) with a single API call. Supports streaming via Server-Sent Events for real-time token output. ConsolidatorAgent fires automatically in the background after each response.</p>
+        <p>Use <code>/chat</code> when you want the full pipeline with stable <code>session_id</code> handling. The README also recommends it as the write path before MCP-side retrieval and consolidation.</p>
       </div>
     </div>
   </div>
@@ -1178,7 +1184,7 @@
     <div class="section-header-center">
       <span class="section-tag">Quick Start</span>
       <h2 class="section-title">Up and Running in Minutes</h2>
-      <p class="section-sub">Three steps to your first memory-augmented agent.</p>
+      <p class="section-sub">The latest setup is lighter than before: Python, an LLM key, and local semantic storage paths.</p>
     </div>
 
     <div class="qs-grid">
@@ -1187,21 +1193,21 @@
           <div class="qs-step-num">1</div>
           <div>
             <h4>Prerequisites</h4>
-            <p>Python 3.11+, Neo4j 5.x with GDS plugin &amp; vector index, and an LLM API key (OpenAI, Gemini, or any <a href="https://github.com/BerriAI/litellm" style="color:var(--blue-600)">litellm</a>-compatible provider).</p>
+            <p>Python 3.11+ and an LLM API key. Supported models follow <a href="https://github.com/BerriAI/litellm" style="color:var(--blue-600)">litellm</a> format, including OpenAI, Gemini, Ollama chat, and OpenAI-compatible endpoints.</p>
           </div>
         </div>
         <div class="qs-step">
           <div class="qs-step-num">2</div>
           <div>
             <h4>Install &amp; Configure</h4>
-            <p>Clone the repo, install dependencies, then copy <code>.env.example</code> to <code>.env</code> and fill in your LLM model, API key, and Neo4j connection details.</p>
+            <p>Clone the repo, install dependencies, then copy <code>.env.example</code> to <code>.env</code> and fill in your LLM and embedding config plus the compact storage paths.</p>
           </div>
         </div>
         <div class="qs-step">
           <div class="qs-step-num">3</div>
           <div>
             <h4>Start the Server</h4>
-            <p>Run <code>python main.py</code>. The FastAPI server starts at <code>http://localhost:8000</code>. Interactive docs at <code>/docs</code>. The React web demo is available under <code>web-demo/</code>.</p>
+            <p>Run <code>python main.py</code> or <code>python main.py --reload</code>. The API is served at <code>http://localhost:8000</code>, with docs at <code>/docs</code> and MCP at <code>/mcp</code>.</p>
           </div>
         </div>
       </div>
@@ -1209,21 +1215,22 @@
       <div class="code-block">
         <div class="cb-title">Setup</div>
         <pre><span class="c-comment"># Clone &amp; install</span>
-<span class="c-cmd">git clone</span> <span class="c-str">https://github.com/LycheeMem/LycheeMem</span>
+<span class="c-cmd">git clone</span> <span class="c-str">https://github.com/LycheeMem/LycheeMem.git</span>
 <span class="c-cmd">cd</span> LycheeMem
 <span class="c-cmd">pip install -e</span> <span class="c-str">".[dev]"</span>
 
 <span class="c-comment"># Configure .env</span>
 <span class="c-env">LLM_MODEL</span>=openai/gpt-4o-mini
 <span class="c-env">LLM_API_KEY</span>=sk-...
+<span class="c-env">LLM_API_BASE</span>=
 <span class="c-env">EMBEDDING_MODEL</span>=openai/text-embedding-3-small
 <span class="c-env">EMBEDDING_DIM</span>=1536
-<span class="c-env">NEO4J_URI</span>=neo4j://127.0.0.1:7687
-<span class="c-env">NEO4J_USER</span>=neo4j
-<span class="c-env">NEO4J_PASSWORD</span>=your_password
+<span class="c-env">COMPACT_MEMORY_DB_PATH</span>=data/compact_memory.db
+<span class="c-env">COMPACT_VECTOR_DB_PATH</span>=data/compact_vector
 
 <span class="c-comment"># Start server</span>
 <span class="c-cmd">python</span> main.py
+<span class="c-cmd">python</span> main.py --reload
 
 <span class="c-comment"># Run the demo script</span>
 <span class="c-cmd">python</span> examples/api_pipeline_demo.py</pre>
@@ -1239,7 +1246,7 @@
       <span class="section-tag">Web Demo</span>
       <h2 class="section-title">Built-in React Dashboard</h2>
       <p class="section-sub">
-        A full-featured React + Vite frontend with live inspection of every memory store and pipeline stage.
+        The bundled frontend shows chat, semantic memory, skills, and working memory side by side.
       </p>
     </div>
 
@@ -1247,22 +1254,22 @@
       <div class="demo-panel">
         <div class="icon">💬</div>
         <h4>Chat</h4>
-        <p>Full conversation view with per-step trace expansion. Click any pipeline stage to inspect retrieved &amp; scored fragments.</p>
+        <p>Chat with the backend and inspect retrieval traces, background context, and the effect of memory on final answers.</p>
       </div>
       <div class="demo-panel">
-        <div class="icon">🕸️</div>
-        <h4>Graph Memory</h4>
-        <p>Interactive Neo4j knowledge graph visualization. Search by entity name or relation type, and filter by valid-time range.</p>
+        <div class="icon">🗂️</div>
+        <h4>Semantic Memory</h4>
+        <p>Browse compact memory entries instead of a graph database. This reflects the latest SQLite + LanceDB design in the README.</p>
       </div>
       <div class="demo-panel">
         <div class="icon">⚙️</div>
         <h4>Skills</h4>
-        <p>Browse and search the procedural skill library. See intent, Markdown docs, usage counts, and last-used timestamps.</p>
+        <p>Inspect the skill library, including reusable procedural docs that can be pulled into reasoning through HyDE retrieval.</p>
       </div>
       <div class="demo-panel">
         <div class="icon">📊</div>
         <h4>Working Memory</h4>
-        <p>Live token usage gauge, compressed summary anchors, and verbatim recent turns for the active session.</p>
+        <p>See token usage, recent raw turns, and summary anchors for the active session while the dual-threshold policy is running.</p>
       </div>
     </div>
 
@@ -1277,17 +1284,120 @@
   </div>
 </section>
 
+<!-- ── OpenClaw ─────────────────────────────────────────────────── -->
+<section class="qs-section" id="openclaw">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-tag">OpenClaw Plugin</span>
+      <h2 class="section-title">Native OpenClaw Integration</h2>
+      <p class="section-sub">
+        The latest README adds an OpenClaw plugin so LycheeMem can become long-term memory for OpenClaw sessions with minimal manual wiring.
+      </p>
+    </div>
+
+    <div class="qs-grid">
+      <div class="qs-steps">
+        <div class="qs-step">
+          <div class="qs-step-num">1</div>
+          <div>
+            <h4>Smart search entry point</h4>
+            <p><code>lychee_memory_smart_search</code> is the default long-term recall tool for the model during normal operation.</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-num">2</div>
+          <div>
+            <h4>Automatic turn mirroring</h4>
+            <p>User and assistant turns are mirrored automatically via hooks, so the model does not need to call append-turn APIs manually.</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-num">3</div>
+          <div>
+            <h4>Boundary-aware consolidation</h4>
+            <p><code>/new</code>, <code>/reset</code>, <code>/stop</code>, and <code>session_end</code> can trigger consolidation, with proactive persistence on strong long-term signals.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="cb-title">Quick Install</div>
+        <pre><span class="c-cmd">openclaw</span> plugins install <span class="c-str">"/path/to/LycheeMem/openclaw-plugin"</span>
+<span class="c-cmd">openclaw</span> gateway restart</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MCP ──────────────────────────────────────────────────────── -->
+<section class="api-section" id="mcp">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-tag">MCP</span>
+      <h2 class="section-title">Remote Memory Access over HTTP MCP</h2>
+      <p class="section-sub">
+        LycheeMem now exposes an MCP endpoint at <code>http://localhost:8000/mcp</code> for remote clients that support HTTP transport.
+      </p>
+    </div>
+
+    <div class="api-grid">
+      <div class="api-card">
+        <div class="api-card-header">
+          <span class="method-badge">POST</span>
+          <span class="endpoint">/mcp</span>
+        </div>
+        <div class="api-card-body">
+          <h4>JSON-RPC transport</h4>
+          <p>Handles MCP JSON-RPC requests including <code>initialize</code>, <code>tools/list</code>, and <code>tools/call</code>.</p>
+          <ul class="api-features">
+            <li>Reuse <code>Mcp-Session-Id</code> after initialize</li>
+            <li>Works with remote HTTP MCP clients</li>
+            <li>Fits the recommended read-side integration flow</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="api-card">
+        <div class="api-card-header">
+          <span class="method-badge">GET</span>
+          <span class="endpoint">/mcp</span>
+        </div>
+        <div class="api-card-body">
+          <h4>SSE stream endpoint</h4>
+          <p>Supports clients that expect the MCP event stream over server-sent events on the same route.</p>
+          <ul class="api-features">
+            <li>Same endpoint path as JSON-RPC</li>
+            <li>Used by some MCP client implementations</li>
+            <li>Pairs with session-id reuse</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px; border: 1px solid var(--blue-200); border-radius: var(--radius-lg); overflow: hidden;">
+      <div class="api-card-header">
+        <span class="method-badge">TOOLS</span>
+        <span class="endpoint">lychee_memory_search · lychee_memory_synthesize · lychee_memory_consolidate</span>
+      </div>
+      <div class="api-card-body">
+        <h4>Recommended MCP pattern</h4>
+        <p>Write turns through <code>/chat</code> or <code>/memory/reason</code> with a stable <code>session_id</code>, retrieve with <code>lychee_memory_search</code>, synthesize into <code>background_context</code>, then consolidate at conversation end.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── CTA ──────────────────────────────────────────────────────── -->
 <section class="cta-section">
   <div>
-    <h2>Give Your Agents Real Memory</h2>
-    <p>LycheeMem is open-source, training-free, and ready for production. Star the repo and start building.</p>
+    <h2>Build Agents With Compact Long-Term Memory</h2>
+    <p>LycheeMem is open source, lighter to deploy than the older graph-based design, and now ready for direct API, MCP, and OpenClaw workflows.</p>
     <div class="cta-actions">
       <a href="https://github.com/LycheeMem/LycheeMem" class="btn btn-white">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
         Star on GitHub
       </a>
-      <a href="../README.md" class="btn btn-outline-white">Read the Docs</a>
+      <a href="https://github.com/LycheeMem/LycheeMem/blob/main/README.md" class="btn btn-outline-white">Read the README</a>
     </div>
   </div>
 </section>
